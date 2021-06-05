@@ -10,9 +10,11 @@ export function Home() {
     <S.Container>
       <Header />
 
-      <Search />
+      <S.WrapperScreen>
+        <Search />
 
-      <DetailNotFound />
+        <DetailNotFound />
+      </S.WrapperScreen>
     </S.Container>
   );
 }
