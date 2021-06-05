@@ -12,7 +12,7 @@ export default {
 
     pastas: "#7EB6FF",
 
-    text: "#040404",
-    text_dark: "#D6D6D6",
+    text: "#D6D6D6",
+    text_dark: "#040404",
   },
 };
