@@ -6,14 +6,14 @@ export const Container = styled.View`
     width: 100%;
     height: 30%;
     align-items: flex-end;
-    background-color: ${theme.colors.header};
+    background-color: ${theme.colors.primary};
   `}
 `;
 
 export const Icon = styled(FontAwesome)`
   ${({ theme }) => css`
     font-size: 150px;
-    color: ${theme.colors.shape};
+    color: ${theme.colors.text};
     margin-right: 20px;
   `}
 `;

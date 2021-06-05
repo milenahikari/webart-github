@@ -5,7 +5,8 @@ export default {
     bold: "Poppins_700Bold",
   },
   colors: {
-    header: "#040404",
+    primary: "#040404",
+    secondary: "#018AFF",
 
     background: "#FDFDFD",
     shape: "#F5F5F5",
@@ -13,6 +14,5 @@ export default {
     pastas: "#7EB6FF",
 
     text: "#D6D6D6",
-    text_dark: "#040404",
   },
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import { Header } from "../../components/Header";
+import { Search } from "../../components/Search";
 
 import * as S from "./styles";
 
@@ -7,7 +8,8 @@ export function Home() {
   return (
     <S.Container>
       <Header />
-      <S.Texto>Teste fonte</S.Texto>
+
+      <Search />
     </S.Container>
   );
 }
