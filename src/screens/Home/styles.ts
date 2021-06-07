@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components/native";
 import { FlatList } from 'react-native';
-import { Feather } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 
 import { UserGithubProps } from '../../components/UserGithub';
 
@@ -49,7 +49,7 @@ export const Button = styled.TouchableOpacity`
   `}
 `;
 
-export const Icon = styled(Feather)`
+export const Icon = styled(FontAwesome)`
   ${({ theme }) => css`
     font-size: 30px;
     color: ${theme.colors.background};

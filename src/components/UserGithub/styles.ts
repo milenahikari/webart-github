@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components/native';
-import { Feather } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 export const Container = styled.TouchableOpacity`
   width: 100%;
@@ -29,7 +29,7 @@ export const Nome = styled.Text`
   `}
 `;
 
-export const Icon = styled(Feather)`
+export const Icon = styled(FontAwesome)`
   ${({theme}) => css`
     font-family: ${theme.fonts.regular};
     color: ${theme.colors.text};
