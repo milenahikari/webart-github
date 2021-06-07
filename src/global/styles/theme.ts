@@ -13,6 +13,7 @@ export default {
 
     pastas: "#7EB6FF",
 
-    text: "#D6D6D6",
+    text: "#AEAEAE",
+    text_light: "#D6D6D6",
   },
 };
