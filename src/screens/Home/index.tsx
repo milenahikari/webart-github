@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react";
-import { Alert } from 'react-native';
+import { Alert, ActivityIndicator } from 'react-native';
+import { useTheme } from "styled-components";
 
 import api from '../../services/api';
 
@@ -11,6 +12,9 @@ import { CardUserGithub, UserGithubProps } from "../../components/CardUserGithub
 import * as S from "./styles";
 
 export function Home() {
+  const theme = useTheme();
+
+  const [loading, setLoading] = useState(false);
   const [searchedUser, setSearchedUser] = useState('');
   const [usersGithub, setUsersGithub] = useState<UserGithubProps[]>([]);
 
@@ -23,10 +27,15 @@ export function Home() {
         return;
       }
 
+      setLoading(true);
+
       const response = await api.get(`/search/users?q=${searchedUser}`);
+
       const { items } = response.data;
 
       setUsersGithub(items);
+      setLoading(false);
+
     } catch(err) {
       console.log(err);
     }
@@ -46,7 +55,12 @@ export function Home() {
           />
 
           <S.Button onPress={handleSearchUser}>
-            <S.Icon name="search"></S.Icon>
+            { 
+              loading 
+              ? <ActivityIndicator size="small" color={theme.colors.background} />
+              : <S.Icon name="search"></S.Icon>
+            }
+            
           </S.Button>
         </S.WrapperSearch>
 
