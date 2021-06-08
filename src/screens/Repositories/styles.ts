@@ -1,6 +1,9 @@
 import styled, { css } from 'styled-components/native';
+import { FlatList } from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import { FontAwesome } from '@expo/vector-icons';
+
+import { RepositoryProps } from '../../components/CardRepository';
 
 export const Container = styled.View`
   ${({theme}) => css`
@@ -35,4 +38,10 @@ export const Icon = styled(FontAwesome)`
     font-size: 20px;
     color: ${theme.colors.shape};
   `}
+`;
+
+export const ListRepositories = styled(FlatList as new () => FlatList<RepositoryProps>).attrs({
+  showsVerticalScrollIndicator: false
+})`
+  flex: 1;
 `;

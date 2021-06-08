@@ -11,7 +11,7 @@ export default {
     background: "#FDFDFD",
     shape: "#F5F5F5",
 
-    pastas: "#7EB6FF",
+    pasta: "#7EB6FF",
 
     text: "#AEAEAE",
     text_light: "#D6D6D6",
