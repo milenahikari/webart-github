@@ -6,7 +6,7 @@ import api from '../../services/api';
 import { Header } from "../../components/Header";
 import { Body } from "../../components/Body";
 import { DetailNotFound } from "../../components/DetailNotFound";
-import { UserGithub, UserGithubProps } from "../../components/UserGithub";
+import { CardUserGithub, UserGithubProps } from "../../components/CardUserGithub";
 
 import * as S from "./styles";
 
@@ -57,7 +57,7 @@ export function Home() {
           data={usersGithub}
           keyExtractor={user => user.id.toString()}
           renderItem={({item: user}) => (
-            <UserGithub data={user}/>
+            <CardUserGithub data={user}/>
           )}
           ListEmptyComponent={<DetailNotFound />}
         />    

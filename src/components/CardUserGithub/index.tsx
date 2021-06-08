@@ -13,7 +13,7 @@ type Props = {
   data: UserGithubProps;
 }
 
-export function UserGithub({ data }: Props) {
+export function CardUserGithub({ data }: Props) {
   return (
     <S.Container>
       <S.WrapperInfo>

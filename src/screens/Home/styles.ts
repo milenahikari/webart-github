@@ -2,7 +2,7 @@ import styled, { css } from "styled-components/native";
 import { FlatList } from 'react-native';
 import { FontAwesome } from "@expo/vector-icons";
 
-import { UserGithubProps } from '../../components/UserGithub';
+import { UserGithubProps } from '../../components/CardUserGithub';
 
 export const Container = styled.View`
   ${({ theme }) => css`

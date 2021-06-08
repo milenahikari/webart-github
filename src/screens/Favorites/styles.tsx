@@ -7,4 +7,9 @@ export const Container = styled.View`
   `}
 `;
 
-export const Title = styled.Text``;
+export const Title = styled.Text`
+  ${({ theme }) => css`
+    font-size: 16px;
+    color: ${theme.colors.text};
+  `}
+`;
