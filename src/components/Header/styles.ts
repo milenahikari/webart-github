@@ -14,6 +14,6 @@ export const Icon = styled(FontAwesome)`
   ${({ theme }) => css`
     font-size: 150px;
     color: ${theme.colors.text};
-    margin-right: 20px;
+    margin-right: 25px;
   `}
 `;

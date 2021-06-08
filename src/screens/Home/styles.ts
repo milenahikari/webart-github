@@ -24,14 +24,15 @@ export const Input = styled.TextInput`
     height: 50px;
     border: 1px solid ${theme.colors.text};
     border-radius: 10px;
-    padding-left: 10px;
+    padding: 0 10px;
     color: ${theme.colors.text};
   `}
 `;
 
 export const Button = styled.TouchableOpacity`
   ${({ theme }) => css`
-    width: 23%;
+    width: 22%;
+    height: 50px;
     background-color: ${theme.colors.secondary};
     border-radius: 10px;
     justify-content: center;
@@ -41,7 +42,7 @@ export const Button = styled.TouchableOpacity`
 
 export const Icon = styled(FontAwesome)`
   ${({ theme }) => css`
-    font-size: 30px;
+    font-size: 25px;
     color: ${theme.colors.background};
   `}
 `;
