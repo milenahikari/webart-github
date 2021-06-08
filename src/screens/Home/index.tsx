@@ -50,20 +50,17 @@ export function Home() {
           </S.Button>
         </S.WrapperSearch>
 
-        {
-          ! usersGithub.length
-          ? <DetailNotFound />
-          : <>
-              <S.ListUsersTitle>Usuários encontrados</S.ListUsersTitle>
-              <S.ListUsers
-                data={usersGithub}
-                keyExtractor={user => user.id.toString()}
-                renderItem={({item: user}) => (
-                  <UserGithub data={user}/>
-                )}
-              />
-            </>
-        }       
+        
+        { !! usersGithub.length &&  <S.ListUsersTitle>Usuários encontrados</S.ListUsersTitle>}
+
+        <S.ListUsers
+          data={usersGithub}
+          keyExtractor={user => user.id.toString()}
+          renderItem={({item: user}) => (
+            <UserGithub data={user}/>
+          )}
+          ListEmptyComponent={<DetailNotFound />}
+        />    
         
       </Body>
     </S.Container>
