@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import api from '../../services/api';
@@ -30,6 +30,27 @@ export function Repositories() {
     getRepositories();
   }, [userSelected]);
 
+  const handleToggleFavoriteUser = useCallback(async () => {
+    const favoriteUsersStorage = await AsyncStorage.getItem('@Github:favoriteUsers');
+    const favoriteUsers = favoriteUsersStorage ? JSON.parse(favoriteUsersStorage) : [];
+
+    if(!favoriteUsers.lenght) {
+      const newUsersFavorites: UserGithubProps[] = [{
+        id: userSelected.id,
+        login: userSelected.login,
+        avatar_url: userSelected.avatar_url
+      }];
+      
+      await AsyncStorage.setItem('@Github:favoriteUsers', JSON.stringify(newUsersFavorites));
+      return;
+    }
+
+
+    const foundUser =     const favoriteUsers: UserGithubProps[] = JSON.parse(favoriteUsersStorage);
+    .findOne((user) => user.id === userSelected.id);
+    console.log(foundUser);
+  }, []);
+
   return(
     <S.Container>
       <Header />
@@ -38,7 +59,7 @@ export function Repositories() {
         <S.WrapperFavorite>
           <S.Title>Favoritar {userSelected.login} ?</S.Title>
 
-          <S.ButtonFavorite>
+          <S.ButtonFavorite onPress={handleToggleFavoriteUser}>
             <S.Icon name="heart"/>
           </S.ButtonFavorite>
         </S.WrapperFavorite>
