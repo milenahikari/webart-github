@@ -4,6 +4,7 @@ import { Alert } from 'react-native';
 import api from '../../services/api';
 
 import { Header } from "../../components/Header";
+import { Body } from "../../components/Body";
 import { DetailNotFound } from "../../components/DetailNotFound";
 import { UserGithub, UserGithubProps } from "../../components/UserGithub";
 
@@ -35,7 +36,7 @@ export function Home() {
     <S.Container>
       <Header />
 
-      <S.Body>
+      <Body>
         <S.WrapperSearch>
           <S.Input
             placeholder= "Buscar usuário"
@@ -64,7 +65,7 @@ export function Home() {
             </>
         }       
         
-      </S.Body>
+      </Body>
     </S.Container>
   );
 }
