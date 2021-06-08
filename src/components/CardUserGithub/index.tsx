@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 import * as S from './styles';
 
@@ -14,8 +15,10 @@ type Props = {
 }
 
 export function CardUserGithub({ data }: Props) {
+  const navigation = useNavigation();
+
   return (
-    <S.Container>
+    <S.Container onPress={() => navigation.navigate('Repositories')}>
       <S.WrapperInfo>
         <S.Image source={{uri: data.avatar_url}} />
         

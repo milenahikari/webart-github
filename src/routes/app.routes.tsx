@@ -1,52 +1,30 @@
 import React from 'react';
-import { useTheme } from 'styled-components';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { FontAwesome } from '@expo/vector-icons';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import { Home } from '../screens/Home';
-import { Favorites } from '../screens/Favorites';
+import { AppBottomRoutes } from './appbottom.routes';
+import { Repositories } from '../screens/Repositories';
 
-const { Navigator, Screen } = createBottomTabNavigator();
+const { Navigator, Screen } = createStackNavigator();
 
 export function AppRoutes() {
-  const theme = useTheme();
 
   return (
-    <Navigator
-      tabBarOptions={{
-        activeTintColor: theme.colors.primary,
-        inactiveTintColor: theme.colors.text,
-        showLabel: false,
-        style: {
-          backgroundColor: theme.colors.shape,
-          borderTopColor: theme.colors.shape,
-        }
-      }}
-    >
-      <Screen
+    <Navigator>
+      <Screen 
         name="Home"
-        component={Home}
+        component={AppBottomRoutes}
         options={{
-          tabBarIcon: (({ size, color }) => (
-            <FontAwesome 
-              name="search"
-              size={size}
-              color={color}
-            />
-          ))
+          headerShown: false,
+          gestureEnabled: false,
         }}
       />
-      <Screen
-        name="Favorites"
-        component={Favorites}
+      
+      <Screen 
+        name="Repositories"
+        component={Repositories}
         options={{
-          tabBarIcon: (({ size, color }) => (
-            <FontAwesome 
-              name="heart"
-              size={size}
-              color={color}
-            />
-          ))
+          headerShown: false,
+          gestureEnabled: false,
         }}
       />
     </Navigator>
