@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components/native";
 import { FlatList } from 'react-native';
+import { RectButton } from 'react-native-gesture-handler';
 import { FontAwesome } from "@expo/vector-icons";
 
 import { UserGithubProps } from '../../components/CardUserGithub';
@@ -29,7 +30,7 @@ export const Input = styled.TextInput`
   `}
 `;
 
-export const Button = styled.TouchableOpacity`
+export const Button = styled(RectButton)`
   ${({ theme }) => css`
     width: 22%;
     height: 50px;

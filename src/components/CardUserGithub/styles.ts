@@ -1,7 +1,8 @@
 import styled, { css } from 'styled-components/native';
+import { RectButton } from 'react-native-gesture-handler';
 import { FontAwesome } from '@expo/vector-icons';
 
-export const Container = styled.TouchableOpacity`
+export const Container = styled(RectButton)`
   width: 100%;
   height: 60px;
   flex-direction: row;
