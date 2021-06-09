@@ -11,44 +11,65 @@ import { RepositoryProps, CardRepository } from '../../components/CardRepository
 import * as S from './styles';
 
 export function Repositories() {
+  const keyFavoriteStorage = '@Github:favoriteUsers';
+  const keyUserSelectedStorage = '@Github:userSelected';
+
+  const [isUserFavorite, setIsUserFavorite] = useState(false);
   const [userSelected, setUserSelected] = useState<UserGithubProps>({} as UserGithubProps);
   const [userRepositories, setUserRepositories] = useState<RepositoryProps[]>([]);
 
   useEffect(() => {
     async function getRepositories() {
-      const user = await AsyncStorage.getItem('@Github:userSelected');
+      const dataStorage = await AsyncStorage.getItem(keyUserSelectedStorage);
 
-      setUserSelected(JSON.parse(user!));
+      const user = JSON.parse(dataStorage!);
 
-      if(userSelected.hasOwnProperty('login')) {
-        const response = await api.get(`users/${userSelected.login}/repos`);
-        
-        setUserRepositories(response.data);
+      const response = await api.get(`users/${user.login}/repos`);
+      
+      setUserSelected(user);
+      setUserRepositories(response.data);
+    }
+
+    async function validateUserFavorite() {
+      const dataStorage = await AsyncStorage.getItem(keyFavoriteStorage);
+
+      const favoriteUsers = dataStorage ? JSON.parse(dataStorage) : [];
+
+      const foundUser = favoriteUsers.find((user: UserGithubProps) => user.id === userSelected.id);
+
+      if(foundUser) {
+        setIsUserFavorite(true);
+        return;
       }
+
+      setIsUserFavorite(false);
     }
 
     getRepositories();
-  }, [userSelected]);
+    validateUserFavorite();
+  }, []);
 
   const handleToggleFavoriteUser = useCallback(async () => {
-    const favoriteUsersStorage = await AsyncStorage.getItem('@Github:favoriteUsers');
-    const favoriteUsers = favoriteUsersStorage ? JSON.parse(favoriteUsersStorage) : [];
+    const dataStorage = await AsyncStorage.getItem(keyFavoriteStorage);
+    const favoriteUsers = dataStorage ? JSON.parse(dataStorage) : [];
 
-    if(!favoriteUsers.lenght) {
-      const newUsersFavorites: UserGithubProps[] = [{
-        id: userSelected.id,
-        login: userSelected.login,
-        avatar_url: userSelected.avatar_url
-      }];
-      
-      await AsyncStorage.setItem('@Github:favoriteUsers', JSON.stringify(newUsersFavorites));
+    if(isUserFavorite) {
+      const filteredUsersFavorites = favoriteUsers.filter((user: UserGithubProps) => user.id !== userSelected.id);
+
+      await AsyncStorage.setItem(keyFavoriteStorage, JSON.stringify(filteredUsersFavorites));
+
+      setIsUserFavorite(false);
       return;
     }
 
+    const favoriteUsersFormatted = [
+      ...favoriteUsers,
+      userSelected
+    ];
 
-    const foundUser =     const favoriteUsers: UserGithubProps[] = JSON.parse(favoriteUsersStorage);
-    .findOne((user) => user.id === userSelected.id);
-    console.log(foundUser);
+    await AsyncStorage.setItem(keyFavoriteStorage, JSON.stringify(favoriteUsersFormatted));
+
+    setIsUserFavorite(true);
   }, []);
 
   return(
@@ -60,7 +81,7 @@ export function Repositories() {
           <S.Title>Favoritar {userSelected.login} ?</S.Title>
 
           <S.ButtonFavorite onPress={handleToggleFavoriteUser}>
-            <S.Icon name="heart"/>
+            <S.Icon name="heart" favorite={isUserFavorite}/>
           </S.ButtonFavorite>
         </S.WrapperFavorite>
 

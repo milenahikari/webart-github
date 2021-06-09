@@ -5,6 +5,10 @@ import { FontAwesome } from '@expo/vector-icons';
 
 import { RepositoryProps } from '../../components/CardRepository';
 
+type IconProps = {
+  favorite: boolean;
+};
+
 export const Container = styled.View`
   ${({theme}) => css`
     flex: 1;
@@ -33,10 +37,10 @@ export const ButtonFavorite = styled(BorderlessButton)`
   `}
 `;
 
-export const Icon = styled(FontAwesome)`
-  ${({theme}) => css`
+export const Icon = styled(FontAwesome)<IconProps>`
+  ${({theme, favorite}) => css`
     font-size: 20px;
-    color: ${theme.colors.shape};
+    color: ${favorite ? theme.colors.heart : theme.colors.shape};
   `}
 `;
 
