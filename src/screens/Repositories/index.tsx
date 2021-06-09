@@ -56,10 +56,11 @@ export function Repositories() {
 
   const handleToggleFavoriteUser = useCallback(async () => {
     const dataStorage = await AsyncStorage.getItem(keyFavoriteStorage);
-    const favoriteUsers = dataStorage ? JSON.parse(dataStorage) : [];
+
+    const favoriteUsersStorage = dataStorage ? JSON.parse(dataStorage) : [];
 
     if(isUserFavorite) {
-      const filteredUsersFavorites = favoriteUsers.filter((user: UserGithubProps) => user.id !== userSelected.id);
+      const filteredUsersFavorites = favoriteUsersStorage.filter((user: UserGithubProps) => user.id !== userSelected.id);
 
       await AsyncStorage.setItem(keyFavoriteStorage, JSON.stringify(filteredUsersFavorites));
 
@@ -68,7 +69,7 @@ export function Repositories() {
     }
 
     const favoriteUsersFormatted = [
-      ...favoriteUsers,
+      ...favoriteUsersStorage,
       userSelected
     ];
 
