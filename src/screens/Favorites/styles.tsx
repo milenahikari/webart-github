@@ -1,4 +1,6 @@
 import styled, { css } from 'styled-components/native';
+import { FlatList } from 'react-native';
+import { UserGithubProps } from '../../components/CardUserGithub';
 
 export const Container = styled.View`
   ${({ theme }) => css`
@@ -14,7 +16,7 @@ export const Title = styled.Text`
   `}
 `;
 
-export const ListFavoriteUsers = styled.FlatList``;
+export const ListFavoriteUsers = styled(FlatList as new () => FlatList<UserGithubProps>)``;
 
 export const EmptyUsersFavorites = styled.View`
   flex: 1;

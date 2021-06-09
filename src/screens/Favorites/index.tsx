@@ -36,7 +36,7 @@ export function Favorites() {
           favoriteUsers.length
           ? <S.ListFavoriteUsers 
               data={favoriteUsers}
-              // keyExtractor={(item) => item.id.toString()}
+              keyExtractor={(item) => item.id.toString()}
               renderItem={({item: user}) => (
                 <CardUserGithub data={user} />
               )}
