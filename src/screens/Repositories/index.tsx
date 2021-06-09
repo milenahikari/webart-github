@@ -30,12 +30,18 @@ export function Repositories() {
       setUserRepositories(response.data);
     }
 
+    getRepositories();
+  }, []);
+
+  useEffect(() => {
     async function validateUserFavorite() {
       const dataStorage = await AsyncStorage.getItem(keyFavoriteStorage);
 
-      const favoriteUsers = dataStorage ? JSON.parse(dataStorage) : [];
+      const favoriteUsersStorage = dataStorage ? JSON.parse(dataStorage) : [];
 
-      const foundUser = favoriteUsers.find((user: UserGithubProps) => user.id === userSelected.id);
+      if(!favoriteUsersStorage.lenght) return;
+
+      const foundUser = favoriteUsersStorage.find((user: UserGithubProps) => user.id === userSelected.id);
 
       if(foundUser) {
         setIsUserFavorite(true);
@@ -45,7 +51,6 @@ export function Repositories() {
       setIsUserFavorite(false);
     }
 
-    getRepositories();
     validateUserFavorite();
   }, []);
 
