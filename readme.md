@@ -57,7 +57,6 @@ Desenvolvemos a estrutura base da aplicação utilizando:
 Segue alguns prints do projeto
 
 <div>
-  <img style="margin: 5px" alt="Splash screen" src="https://imgur.com/KOrH2Al.png" width="200">
   <img style="margin: 5px" alt="Home" src="https://imgur.com/Ye3zOxu.png" width="200">
   <img style="margin: 5px" alt="Search a user" src="https://imgur.com/AJTjc4x.png" width="200">
   <img style="margin: 5px" alt="List user repositories" src="https://imgur.com/LW3R3MD.png" width="200">
