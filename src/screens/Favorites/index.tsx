@@ -22,7 +22,7 @@ export function Favorites() {
     }
 
     getFavoriteUsers();
-  }, [AsyncStorage]);
+  }, [AsyncStorage,favoriteUsers]);
 
   return(
     <S.Container>

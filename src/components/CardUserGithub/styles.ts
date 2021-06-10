@@ -33,20 +33,22 @@ export const Nome = styled.Text`
   `}
 `;
 
-// const iconModifier = {
-//   default: (theme: DefaultTheme) => css`
-//     color: ${theme.colors.text};
-//   `,
+const iconModifier = {
+  default: (theme: DefaultTheme) => css`
+    color: ${theme.colors.text};
+  `,
 
-//   delete: (theme: DefaultTheme) => css`
-//     color: ${theme.colors.trash};
-//   `,
-// };
+  delete: (theme: DefaultTheme) => css`
+    color: ${theme.colors.trash};
+  `,
+};
 
-/* ${iconModifier[type!](theme)} */
-export const Icon = styled(FontAwesome)`
-  ${({theme}) => css`
+export const Icon = styled(FontAwesome).attrs(({ type }) => ({
+  name: type == 'default' ? 'chevron-right' : 'trash'
+}))<TypeProps>`
+  ${({theme, type}) => css`
     font-family: ${theme.fonts.regular};
     font-size: 20px;
+    ${iconModifier[type!](theme)}
   `}
 `;

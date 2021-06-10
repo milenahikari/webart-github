@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import * as S from './styles';
 
@@ -17,6 +18,8 @@ export type CardUserGithubProps = {
 export function CardUserGithub({ type= 'default', data }: CardUserGithubProps) {
   const navigation = useNavigation();
 
+  const keyFavoriteStorage = '@Github:favoriteUsers';
+
   const handleSelectedUser = useCallback(async () => {
     try {
       navigation.navigate('Repositories', {id: data.id, login: data.login, avatar_url: data.avatar_url})
@@ -25,15 +28,25 @@ export function CardUserGithub({ type= 'default', data }: CardUserGithubProps) {
     }
   }, []);
 
+  const handleRemoveFavoriteUser = useCallback(async (id: number) => {
+    const dataStorage = await AsyncStorage.getItem(keyFavoriteStorage);
+
+    const favoriteUsersStorage = dataStorage ? JSON.parse(dataStorage) : [];
+
+    const filteredFavoriteUsers = favoriteUsersStorage.filter((user: UserGithubProps) => user.id !== id);
+
+    await AsyncStorage.setItem(keyFavoriteStorage, JSON.stringify(filteredFavoriteUsers));
+  }, []);
+
   return (
-    <S.Container onPress={handleSelectedUser}>
+    <S.Container onPress={() => type == 'default' ? handleSelectedUser() : handleRemoveFavoriteUser(data.id)}>
       <S.WrapperInfo>
         <S.Image source={{uri: data.avatar_url}} />
         
         <S.Nome>{data.login}</S.Nome>
       </S.WrapperInfo>
 
-      <S.Icon name={type == 'default' ? 'chevron-right' : 'trash'}/>
+      <S.Icon type={type}/>
     </S.Container>
   );
 }
