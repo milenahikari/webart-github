@@ -12,7 +12,7 @@ export const Container = styled(RectButton)`
 export const Icon = styled(FontAwesome)`
   ${({theme}) => css`
     font-size: 45px;
-    color: ${theme.colors.pasta};
+    color: ${theme.colors.folder};
     margin-right: 25px;
   `}
 `;

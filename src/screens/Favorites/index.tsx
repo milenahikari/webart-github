@@ -37,7 +37,7 @@ export function Favorites() {
               data={favoriteUsers}
               keyExtractor={(item) => item.id.toString()}
               renderItem={({item: user}) => (
-                <CardUserGithub data={user} />
+                <CardUserGithub type="delete" data={user} />
               )}
             />
           : <S.EmptyFavoriteUsers>

@@ -1,6 +1,9 @@
-import styled, { css } from 'styled-components/native';
+import styled, { css, DefaultTheme  } from 'styled-components/native';
 import { RectButton } from 'react-native-gesture-handler';
 import { FontAwesome } from '@expo/vector-icons';
+import { CardUserGithubProps } from ".";
+
+type TypeProps = Pick<CardUserGithubProps, "type">;
 
 export const Container = styled(RectButton)`
   width: 100%;
@@ -30,10 +33,20 @@ export const Nome = styled.Text`
   `}
 `;
 
+// const iconModifier = {
+//   default: (theme: DefaultTheme) => css`
+//     color: ${theme.colors.text};
+//   `,
+
+//   delete: (theme: DefaultTheme) => css`
+//     color: ${theme.colors.trash};
+//   `,
+// };
+
+/* ${iconModifier[type!](theme)} */
 export const Icon = styled(FontAwesome)`
   ${({theme}) => css`
     font-family: ${theme.fonts.regular};
-    color: ${theme.colors.text};
     font-size: 20px;
   `}
 `;

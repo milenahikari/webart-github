@@ -9,11 +9,12 @@ export type UserGithubProps = {
   avatar_url: string;
 }
 
-type Props = {
+export type CardUserGithubProps = {
+  type: 'default' | 'delete';
   data: UserGithubProps;
 }
 
-export function CardUserGithub({ data }: Props) {
+export function CardUserGithub({ type= 'default', data }: CardUserGithubProps) {
   const navigation = useNavigation();
 
   const handleSelectedUser = useCallback(async () => {
@@ -32,7 +33,7 @@ export function CardUserGithub({ data }: Props) {
         <S.Nome>{data.login}</S.Nome>
       </S.WrapperInfo>
 
-      <S.Icon name="chevron-right"/>
+      <S.Icon name={type == 'default' ? 'chevron-right' : 'trash'}/>
     </S.Container>
   );
 }

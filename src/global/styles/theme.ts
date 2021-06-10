@@ -11,8 +11,9 @@ export default {
     background: "#FDFDFD",
     shape: "#F5F5F5",
 
-    pasta: "#7EB6FF",
+    folder: "#7EB6FF",
     heart: '#C46683',
+    trash: '#c33838',
 
     text: "#AEAEAE",
     text_light: "#D6D6D6",
