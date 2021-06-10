@@ -9,7 +9,7 @@
 
 ## 💡 Sobre
 
-Projeto desenvolvido no challenge web.art orange_heart
+Projeto desenvolvido no challenge web.art 🧡
 
 - Construindo aplicação utilizando a API do GitHub para buscar usuários, listar os repositórios e adicionar aos favoritos
 
