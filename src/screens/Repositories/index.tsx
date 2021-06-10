@@ -24,7 +24,17 @@ export function Repositories() {
     async function getRepositories() {
       const response = await api.get(`users/${routeParams.login}/repos`);
       
-      setUserRepositories(response.data);
+      const repositories = response.data;
+
+      const repositoriesFormatted = repositories.map((item: RepositoryProps) => ({
+        id: item.id,
+        name: item.name,
+        description: item.description,
+        html_url: item.html_url,
+        full_name: item.full_name
+      }));
+
+      setUserRepositories(repositoriesFormatted);
     }
 
     async function validateFavoriteUser() {
