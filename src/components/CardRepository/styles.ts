@@ -1,10 +1,12 @@
 import styled, { css } from 'styled-components/native';
+import { RectButton } from 'react-native-gesture-handler';
 import { Text } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
-export const Container = styled.View`
+export const Container = styled(RectButton)`
   flex-direction: row;
-  margin-top: 25px;
+  margin-top: 20px;
+  padding: 10px;
 `;
 
 export const Icon = styled(FontAwesome)`

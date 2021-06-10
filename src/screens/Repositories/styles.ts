@@ -48,4 +48,5 @@ export const ListRepositories = styled(FlatList as new () => FlatList<Repository
   showsVerticalScrollIndicator: false
 })`
   flex: 1;
+  margin-top: 20px;
 `;
