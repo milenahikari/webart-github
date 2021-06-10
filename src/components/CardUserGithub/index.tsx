@@ -11,7 +11,7 @@ export type UserGithubProps = {
 }
 
 export type CardUserGithubProps = {
-  type: 'default' | 'delete';
+  type?: 'default' | 'delete';
   data: UserGithubProps;
 }
 
