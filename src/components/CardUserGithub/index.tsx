@@ -29,13 +29,17 @@ export function CardUserGithub({ type= 'default', data }: CardUserGithubProps) {
   }, []);
 
   const handleRemoveFavoriteUser = useCallback(async (id: number) => {
-    const dataStorage = await AsyncStorage.getItem(keyFavoriteStorage);
+    try {
+      const dataStorage = await AsyncStorage.getItem(keyFavoriteStorage);
 
-    const favoriteUsersStorage = dataStorage ? JSON.parse(dataStorage) : [];
+      const favoriteUsersStorage = dataStorage ? JSON.parse(dataStorage) : [];
 
-    const filteredFavoriteUsers = favoriteUsersStorage.filter((user: UserGithubProps) => user.id !== id);
+      const filteredFavoriteUsers = favoriteUsersStorage.filter((user: UserGithubProps) => user.id !== id);
 
-    await AsyncStorage.setItem(keyFavoriteStorage, JSON.stringify(filteredFavoriteUsers));
+      await AsyncStorage.setItem(keyFavoriteStorage, JSON.stringify(filteredFavoriteUsers));
+    } catch(err) {
+      console.log(err);
+    }
   }, []);
 
   return (

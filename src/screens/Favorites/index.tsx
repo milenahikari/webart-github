@@ -14,11 +14,15 @@ export function Favorites() {
 
   useEffect(() => {
     async function getFavoriteUsers() {
-      const dataStorage = await AsyncStorage.getItem(keyFavoriteStorage);
+      try {
+        const dataStorage = await AsyncStorage.getItem(keyFavoriteStorage);
 
-      const favoriteUsersStorage = dataStorage ? JSON.parse(dataStorage) : [];
+        const favoriteUsersStorage = dataStorage ? JSON.parse(dataStorage) : [];
 
-      if(!favoriteUsersStorage.lenght) setFavoriteUsers(favoriteUsersStorage);
+        if(!favoriteUsersStorage.lenght) setFavoriteUsers(favoriteUsersStorage);
+      } catch(err) {
+        console.log(err);
+      }
     }
 
     getFavoriteUsers();
