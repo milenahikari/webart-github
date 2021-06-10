@@ -55,8 +55,8 @@ export function Home() {
         <S.WrapperSearch>
           <S.Input
             placeholder= "Buscar usuário"
-            returnKeyType= "search"
-            onKeyPress={handleSearchUser}
+            returnKeyType="search"
+            onSubmitEditing={() => handleSearchUser()}
             onChangeText={setSearchedUser}
             value={searchedUser}
           />
