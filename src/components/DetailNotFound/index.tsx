@@ -1,6 +1,6 @@
 import React from "react";
 
-import octocat from "../../images/octocat.png";
+import octocat from "../../assets/images/octocat.png";
 
 import * as S from "./styles";
 
