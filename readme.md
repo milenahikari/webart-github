@@ -1,8 +1,3 @@
-
-<h1 align="center">
-  <img alt="Ignite" src="https://imgur.com/5OLkLod.png" width="100%">
-</h1>
-
 ## 📕 Indice
 
 - [Sobre](#-sobre)
@@ -54,7 +49,7 @@ Desenvolvemos a estrutura base da aplicação utilizando:
 
   #opção 2 - utilizar dispositivo físico
   #ler qrcode com o aplicativo do EXPO
-
+```
 ---
 
 ## 📱 Preview do projeto
