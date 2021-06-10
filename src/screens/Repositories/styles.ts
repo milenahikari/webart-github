@@ -44,6 +44,12 @@ export const Icon = styled(FontAwesome)<IconProps>`
   `}
 `;
 
+export const WrapperLoading = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const ListRepositories = styled(FlatList as new () => FlatList<RepositoryProps>).attrs({
   showsVerticalScrollIndicator: false
 })`

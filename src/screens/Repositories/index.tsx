@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRoute } from '@react-navigation/native';
+import { useTheme } from "styled-components";
 
 import api from '../../services/api';
 
@@ -12,46 +14,62 @@ import { RepositoryProps, CardRepository } from '../../components/CardRepository
 import * as S from './styles';
 
 export function Repositories() {
+  const theme = useTheme();
   const { params } = useRoute();
   const routeParams = params as UserGithubProps;
 
   const keyFavoriteStorage = '@Github:favoriteUsers';
 
+  const [loading, setLoading] = useState(false);
   const [isFavoriteUser, setIsFavoriteUser] = useState(false);
   const [userRepositories, setUserRepositories] = useState<RepositoryProps[]>([]);
 
   useEffect(() => {
     async function getRepositories() {
-      const response = await api.get(`users/${routeParams.login}/repos`);
+      try {
+
+        setLoading(true);
+
+        const response = await api.get(`users/${routeParams.login}/repos`);
       
-      const repositories = response.data;
+        const repositories = response.data;
 
-      const repositoriesFormatted = repositories.map((item: RepositoryProps) => ({
-        id: item.id,
-        name: item.name,
-        description: item.description,
-        html_url: item.html_url,
-        full_name: item.full_name
-      }));
+        const repositoriesFormatted = repositories.map((item: RepositoryProps) => ({
+          id: item.id,
+          name: item.name,
+          description: item.description,
+          html_url: item.html_url,
+          full_name: item.full_name
+        }));
 
-      setUserRepositories(repositoriesFormatted);
+        setUserRepositories(repositoriesFormatted);
+        setLoading(false);
+
+      } catch(err) {
+        console.log(err);
+      }
     }
 
     async function validateFavoriteUser() {
-      const dataStorage = await AsyncStorage.getItem(keyFavoriteStorage);
+      try {
+        const dataStorage = await AsyncStorage.getItem(keyFavoriteStorage);
 
-      const favoriteUsersStorage:UserGithubProps[] = dataStorage ? JSON.parse(dataStorage) : [];
+        const favoriteUsersStorage:UserGithubProps[] = dataStorage ? JSON.parse(dataStorage) : [];
 
-      if(!favoriteUsersStorage.length) return;
+        if(!favoriteUsersStorage.length) return;
 
-      const foundUser = favoriteUsersStorage.find((user: UserGithubProps) => user.id === routeParams.id);
+        const foundUser = favoriteUsersStorage.find((user: UserGithubProps) => user.id === routeParams.id);
 
-      if(foundUser) {
-        setIsFavoriteUser(true);
-        return;
+        if(foundUser) {
+          setIsFavoriteUser(true);
+          return;
+        }
+
+        setIsFavoriteUser(false);
+
+      } catch(err) {
+        console.log(err);
       }
-
-      setIsFavoriteUser(false);
     }
 
     getRepositories();
@@ -59,27 +77,32 @@ export function Repositories() {
   }, [routeParams]);
 
   const handleToggleFavoriteUser = useCallback(async () => {
-    const dataStorage = await AsyncStorage.getItem(keyFavoriteStorage);
+    try {
+      const dataStorage = await AsyncStorage.getItem(keyFavoriteStorage);
 
-    const favoriteUsersStorage = dataStorage ? JSON.parse(dataStorage) : [];
+      const favoriteUsersStorage = dataStorage ? JSON.parse(dataStorage) : [];
 
-    if(isFavoriteUser) {
-      const filteredFavoriteUsers = favoriteUsersStorage.filter((user: UserGithubProps) => user.id !== routeParams.id);
+      if(isFavoriteUser) {
+        const filteredFavoriteUsers = favoriteUsersStorage.filter((user: UserGithubProps) => user.id !== routeParams.id);
 
-      await AsyncStorage.setItem(keyFavoriteStorage, JSON.stringify(filteredFavoriteUsers));
+        await AsyncStorage.setItem(keyFavoriteStorage, JSON.stringify(filteredFavoriteUsers));
 
-      setIsFavoriteUser(false);
-      return;
+        setIsFavoriteUser(false);
+        return;
+      }
+
+      const favoriteUsersFormatted = [
+        ...favoriteUsersStorage,
+        routeParams
+      ];
+
+      await AsyncStorage.setItem(keyFavoriteStorage, JSON.stringify(favoriteUsersFormatted));
+
+      setIsFavoriteUser(true);
+
+    } catch(err) {
+      console.log(err);
     }
-
-    const favoriteUsersFormatted = [
-      ...favoriteUsersStorage,
-      routeParams
-    ];
-
-    await AsyncStorage.setItem(keyFavoriteStorage, JSON.stringify(favoriteUsersFormatted));
-
-    setIsFavoriteUser(true);
   }, [routeParams, isFavoriteUser]);
 
   return(
@@ -95,13 +118,21 @@ export function Repositories() {
           </S.ButtonFavorite>
         </S.WrapperFavorite>
 
-        <S.ListRepositories 
-          data={userRepositories}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({item: repository}) => (
-            <CardRepository data={repository}/>
-          )}
-        />
+        { 
+          loading 
+          ? <S.WrapperLoading>
+              <ActivityIndicator size="large" color={theme.colors.text}/>
+            </S.WrapperLoading>
+
+          : <S.ListRepositories 
+              data={userRepositories}
+              keyExtractor={(item) => item.id.toString()}
+              renderItem={({item: repository}) => (
+                <CardRepository data={repository}/>
+              )}
+            />
+        }
+        
       </Body>
     </S.Container>
   );
