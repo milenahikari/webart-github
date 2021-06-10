@@ -17,7 +17,7 @@ export function Repositories() {
 
   const keyFavoriteStorage = '@Github:favoriteUsers';
 
-  const [isUserFavorite, setIsUserFavorite] = useState(false);
+  const [isFavoriteUser, setIsFavoriteUser] = useState(false);
   const [userRepositories, setUserRepositories] = useState<RepositoryProps[]>([]);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export function Repositories() {
       setUserRepositories(response.data);
     }
 
-    async function validateUserFavorite() {
+    async function validateFavoriteUser() {
       const dataStorage = await AsyncStorage.getItem(keyFavoriteStorage);
 
       const favoriteUsersStorage:UserGithubProps[] = dataStorage ? JSON.parse(dataStorage) : [];
@@ -37,15 +37,15 @@ export function Repositories() {
       const foundUser = favoriteUsersStorage.find((user: UserGithubProps) => user.id === routeParams.id);
 
       if(foundUser) {
-        setIsUserFavorite(true);
+        setIsFavoriteUser(true);
         return;
       }
 
-      setIsUserFavorite(false);
+      setIsFavoriteUser(false);
     }
 
     getRepositories();
-    validateUserFavorite();
+    validateFavoriteUser();
   }, [routeParams]);
 
   const handleToggleFavoriteUser = useCallback(async () => {
@@ -53,12 +53,12 @@ export function Repositories() {
 
     const favoriteUsersStorage = dataStorage ? JSON.parse(dataStorage) : [];
 
-    if(isUserFavorite) {
-      const filteredUsersFavorites = favoriteUsersStorage.filter((user: UserGithubProps) => user.id !== routeParams.id);
+    if(isFavoriteUser) {
+      const filteredFavoriteUsers = favoriteUsersStorage.filter((user: UserGithubProps) => user.id !== routeParams.id);
 
-      await AsyncStorage.setItem(keyFavoriteStorage, JSON.stringify(filteredUsersFavorites));
+      await AsyncStorage.setItem(keyFavoriteStorage, JSON.stringify(filteredFavoriteUsers));
 
-      setIsUserFavorite(false);
+      setIsFavoriteUser(false);
       return;
     }
 
@@ -69,8 +69,8 @@ export function Repositories() {
 
     await AsyncStorage.setItem(keyFavoriteStorage, JSON.stringify(favoriteUsersFormatted));
 
-    setIsUserFavorite(true);
-  }, [routeParams, isUserFavorite]);
+    setIsFavoriteUser(true);
+  }, [routeParams, isFavoriteUser]);
 
   return(
     <S.Container>
@@ -81,7 +81,7 @@ export function Repositories() {
           <S.Title>Favoritar {routeParams.login} ?</S.Title>
 
           <S.ButtonFavorite onPress={handleToggleFavoriteUser}>
-            <S.Icon name="heart" favorite={isUserFavorite}/>
+            <S.Icon name="heart" favorite={isFavoriteUser}/>
           </S.ButtonFavorite>
         </S.WrapperFavorite>
 

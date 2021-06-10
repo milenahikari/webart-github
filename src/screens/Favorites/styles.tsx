@@ -18,13 +18,13 @@ export const Title = styled.Text`
 
 export const ListFavoriteUsers = styled(FlatList as new () => FlatList<UserGithubProps>)``;
 
-export const EmptyUsersFavorites = styled.View`
+export const EmptyFavoriteUsers = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
 `;
 
-export const EmptyUsersFavoritesText = styled.Text`
+export const EmptyFavoriteUsersText = styled.Text`
   ${({ theme }) => css`
     font-size: 14px;
     color: ${theme.colors.text};

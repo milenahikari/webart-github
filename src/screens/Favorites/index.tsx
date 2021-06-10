@@ -40,9 +40,9 @@ export function Favorites() {
                 <CardUserGithub data={user} />
               )}
             />
-          : <S.EmptyUsersFavorites>
-              <S.EmptyUsersFavoritesText>Você ainda não possui favoritos</S.EmptyUsersFavoritesText>
-            </S.EmptyUsersFavorites>
+          : <S.EmptyFavoriteUsers>
+              <S.EmptyFavoriteUsersText>Você ainda não possui favoritos</S.EmptyFavoriteUsersText>
+            </S.EmptyFavoriteUsers>
         }
         
       </Body>
