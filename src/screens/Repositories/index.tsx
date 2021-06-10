@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useRoute } from '@react-navigation/native';
 
 import api from '../../services/api';
 
@@ -11,37 +12,29 @@ import { RepositoryProps, CardRepository } from '../../components/CardRepository
 import * as S from './styles';
 
 export function Repositories() {
+  const { params } = useRoute();
+  const routeParams = params as UserGithubProps;
+
   const keyFavoriteStorage = '@Github:favoriteUsers';
-  const keyUserSelectedStorage = '@Github:userSelected';
 
   const [isUserFavorite, setIsUserFavorite] = useState(false);
-  const [userSelected, setUserSelected] = useState<UserGithubProps>({} as UserGithubProps);
   const [userRepositories, setUserRepositories] = useState<RepositoryProps[]>([]);
 
   useEffect(() => {
     async function getRepositories() {
-      const dataStorage = await AsyncStorage.getItem(keyUserSelectedStorage);
-
-      const user = JSON.parse(dataStorage!);
-
-      const response = await api.get(`users/${user.login}/repos`);
+      const response = await api.get(`users/${routeParams.login}/repos`);
       
-      setUserSelected(user);
       setUserRepositories(response.data);
     }
 
-    getRepositories();
-  }, []);
-
-  useEffect(() => {
     async function validateUserFavorite() {
       const dataStorage = await AsyncStorage.getItem(keyFavoriteStorage);
 
-      const favoriteUsersStorage = dataStorage ? JSON.parse(dataStorage) : [];
+      const favoriteUsersStorage:UserGithubProps[] = dataStorage ? JSON.parse(dataStorage) : [];
 
-      if(!favoriteUsersStorage.lenght) return;
+      if(!favoriteUsersStorage.length) return;
 
-      const foundUser = favoriteUsersStorage.find((user: UserGithubProps) => user.id === userSelected.id);
+      const foundUser = favoriteUsersStorage.find((user: UserGithubProps) => user.id === routeParams.id);
 
       if(foundUser) {
         setIsUserFavorite(true);
@@ -51,8 +44,9 @@ export function Repositories() {
       setIsUserFavorite(false);
     }
 
+    getRepositories();
     validateUserFavorite();
-  }, []);
+  }, [routeParams]);
 
   const handleToggleFavoriteUser = useCallback(async () => {
     const dataStorage = await AsyncStorage.getItem(keyFavoriteStorage);
@@ -60,7 +54,7 @@ export function Repositories() {
     const favoriteUsersStorage = dataStorage ? JSON.parse(dataStorage) : [];
 
     if(isUserFavorite) {
-      const filteredUsersFavorites = favoriteUsersStorage.filter((user: UserGithubProps) => user.id !== userSelected.id);
+      const filteredUsersFavorites = favoriteUsersStorage.filter((user: UserGithubProps) => user.id !== routeParams.id);
 
       await AsyncStorage.setItem(keyFavoriteStorage, JSON.stringify(filteredUsersFavorites));
 
@@ -70,13 +64,13 @@ export function Repositories() {
 
     const favoriteUsersFormatted = [
       ...favoriteUsersStorage,
-      userSelected
+      routeParams
     ];
 
     await AsyncStorage.setItem(keyFavoriteStorage, JSON.stringify(favoriteUsersFormatted));
 
     setIsUserFavorite(true);
-  }, []);
+  }, [routeParams, isUserFavorite]);
 
   return(
     <S.Container>
@@ -84,7 +78,7 @@ export function Repositories() {
 
       <Body>
         <S.WrapperFavorite>
-          <S.Title>Favoritar {userSelected.login} ?</S.Title>
+          <S.Title>Favoritar {routeParams.login} ?</S.Title>
 
           <S.ButtonFavorite onPress={handleToggleFavoriteUser}>
             <S.Icon name="heart" favorite={isUserFavorite}/>

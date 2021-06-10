@@ -17,12 +17,12 @@ export function Favorites() {
       const dataStorage = await AsyncStorage.getItem(keyFavoriteStorage);
 
       const favoriteUsersStorage = dataStorage ? JSON.parse(dataStorage) : [];
-      
-      if(!!favoriteUsersStorage.lenght) setFavoriteUsers(favoriteUsersStorage);
+
+      if(!favoriteUsersStorage.lenght) setFavoriteUsers(favoriteUsersStorage);
     }
 
     getFavoriteUsers();
-  }, []);
+  }, [AsyncStorage]);
 
   return(
     <S.Container>

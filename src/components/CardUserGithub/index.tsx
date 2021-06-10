@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
 import * as S from './styles';
@@ -19,8 +18,7 @@ export function CardUserGithub({ data }: Props) {
 
   const handleSelectedUser = useCallback(async () => {
     try {
-      await AsyncStorage.setItem('@Github:userSelected', JSON.stringify(data));
-      navigation.navigate('Repositories')
+      navigation.navigate('Repositories', {id: data.id, login: data.login, avatar_url: data.avatar_url})
     } catch(err) {
       console.log(err);
     }

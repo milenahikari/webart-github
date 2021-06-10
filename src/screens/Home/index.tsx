@@ -33,7 +33,13 @@ export function Home() {
 
       const { items } = response.data;
 
-      setUsersGithub(items);
+      const users = items.map((item: UserGithubProps) => ({
+        id: item.id,
+        login: item.login,
+        avatar_url: item.avatar_url
+      }));
+
+      setUsersGithub(users);
       setLoading(false);
 
     } catch(err) {
