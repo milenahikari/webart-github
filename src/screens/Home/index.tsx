@@ -56,6 +56,7 @@ export function Home() {
           <S.Input
             placeholder= "Buscar usuário"
             returnKeyType= "search"
+            onKeyPress={handleSearchUser}
             onChangeText={setSearchedUser}
             value={searchedUser}
           />
