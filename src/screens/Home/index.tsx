@@ -40,6 +40,7 @@ export function Home() {
       }));
 
       setUsersGithub(users);
+      setSearchedUser('');
       setLoading(false);
 
     } catch(err) {

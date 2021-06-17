@@ -26,7 +26,7 @@ export function Favorites() {
     }
 
     getFavoriteUsers();
-  }, [AsyncStorage,favoriteUsers]);
+  }, [favoriteUsers]);
 
   return(
     <S.Container>
